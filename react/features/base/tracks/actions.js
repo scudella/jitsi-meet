@@ -13,7 +13,6 @@ import {
     TRACK_BEING_CREATED,
     TRACK_CREATE_CANCELED,
     TRACK_CREATE_ERROR,
-    TRACK_PERMISSION_ERROR,
     TRACK_REMOVED,
     TRACK_UPDATED
 } from './actionTypes';
@@ -461,12 +460,9 @@ function _onCreateLocalTracksRejected({ gum }, device) {
                     break;
                 }
 
-                // FIXME merge into TRACK_CREATE_ERROR with a flag which
-                // indicates it's a permission error.
                 dispatch({
-                    type:
-                        trackPermissionError
-                            ? TRACK_PERMISSION_ERROR : TRACK_CREATE_ERROR,
+                    type: TRACK_CREATE_ERROR,
+                    permissionDenied: trackPermissionError,
                     trackType: device
                 });
             }
